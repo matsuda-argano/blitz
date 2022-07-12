@@ -4,8 +4,8 @@ import { z } from "zod"
 
 const UpdateQuestion = z.object({
   id: z.number(),
-  name: z.string(),
-  choises: z.array(z.object({ id: z.number().optional(), text: z.string() })),
+  text: z.string(),
+  choices: z.array(z.object({ id: z.number().optional(), text: z.string() })),
 })
 
 export default resolver.pipe(
@@ -18,7 +18,7 @@ export default resolver.pipe(
       data: {
         ...data,
         choices: {
-          upsert: data.choises.map((choice) => ({
+          upsert: data.choices.map((choice) => ({
             where: { id: choice.id || 0 },
             create: { text: choice.text },
             update: { text: choice.text },
